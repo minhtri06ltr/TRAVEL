@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -14,6 +18,28 @@ a {
 * {
   box-sizing: border-box;
 }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.slide-right {
+	-webkit-animation: slide-right 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-right 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+ @-webkit-keyframes slide-right {
+  0% {
+    -webkit-transform: translateX(-100px);
+            transform: translateX(-100px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+@keyframes slide-right {
+  0% {
+    -webkit-transform: translateX(-100px);
+            transform: translateX(-100px);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
