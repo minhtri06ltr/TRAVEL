@@ -2,6 +2,7 @@ import Head from "next/head";
 import Feed from "../components/Feed";
 import Sidebar from "../components/Sidebar";
 import { useState } from "react";
+import Widget from "../components/Widget";
 
 export default function Home() {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -15,7 +16,7 @@ export default function Home() {
       <main className="min-h-screen flex max-w-[1500px] mx-auto">
         <Sidebar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
         <Feed setOpenSidebar={setOpenSidebar} />
-        {/*Widgets */}
+        <Widget />
 
         {/*Modal */}
       </main>

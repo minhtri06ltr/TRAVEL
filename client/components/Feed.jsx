@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Feed = ({ setOpenSidebar }) => {
   return (
-    <div className=" flex-1 border border-solid border-white min-h-full w-full">
+    <div className="sm:ml-20 xl:ml-80 flex-1 border border-solid border-white min-h-full w-full">
       <div className="py-4 px-8 flex justify-between w-full h-16 items-center">
         <div className=" sm:opacity-0 sm:invisible  cursor-pointer">
           <Image
@@ -30,6 +30,7 @@ const Feed = ({ setOpenSidebar }) => {
           </a>
         </div>
       </div>
+      <div className="h-[2000px]"></div>
     </div>
   );
 };
