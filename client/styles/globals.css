@@ -7,6 +7,9 @@
   .hoverAnimation{
     @apply hover:bg-[#d9d9d9] hover:bg-opacity-10 rounded-full   flex  xl:justify-start justify-start sm:justify-center   py-2 px-4 transition duration-200 ease-out
   }
+  .icon{
+    @apply mr-4 cursor-pointer hover:bg-[#1b9df0] hover:bg-opacity-10 flex items-center rounded-full justify-center transition ease-out 
+  }
 }
 
 .slide-right {

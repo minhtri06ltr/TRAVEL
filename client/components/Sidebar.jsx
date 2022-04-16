@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/outline";
 import { HashtagIcon as ActiveHashtagIcon } from "@heroicons/react/solid";
 import Link from "next/link";
+import { useDetect } from "../util/useDetectHook";
 
 const UserInfo = () => {
   return (
@@ -68,24 +69,10 @@ const ItemForLargeDevice = ({ Icon, text, active }) => {
     </div>
   );
 };
-const detectClickOutSide = (ref, setOpenSidebar) => {
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setOpenSidebar(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref]);
-};
 
 const Sidebar = ({ setOpenSidebar, openSidebar }) => {
   const wrapperRef = useRef(null);
-  detectClickOutSide(wrapperRef, setOpenSidebar);
+  useDetect(wrapperRef, setOpenSidebar);
   return openSidebar ? (
     <div
       ref={wrapperRef}
@@ -100,7 +87,7 @@ const Sidebar = ({ setOpenSidebar, openSidebar }) => {
           onClick={() => setOpenSidebar(false)}
         />
       </div>
-      <div className="w-fit">
+      <div className="w-[90%] ml-[5%]">
         {[
           {
             icon: HashtagIcon,

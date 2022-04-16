@@ -1,12 +1,27 @@
-import { useState } from "react";
-import { XIcon } from "@heroicons/react/outline";
+import { useState, useRef, useEffect } from "react";
+import {
+  CalendarIcon,
+  ChartBarIcon,
+  EmojiHappyIcon,
+  PhotographIcon,
+  XIcon,
+} from "@heroicons/react/outline";
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
+import { useDetect } from "../util/useDetectHook";
 
 const Input = () => {
+  const wrapperRef = useRef(null);
+
   const [input, setInput] = useState("");
   const [file, setFile] = useState(null);
+  const [showEmoji, setShowEmoji] = useState(false);
+  useDetect(wrapperRef, setShowEmoji);
+  const imgInputRef = useRef("");
+  const addImgToPost = () => {};
   return (
     <div
-      className={`border-b border-gray-700 p-4 flex space-x-4 overflow-y-scroll`}
+      className={`border-b border-gray-700 p-4 flex space-x-4 overflow-y-auto`}
     >
       <img
         className=" rounded-full h-14 w-14 object-cover cursor-pointer"
@@ -20,8 +35,8 @@ const Input = () => {
             id=""
             row="2"
             onChange={(e) => setInput(e.target.value)}
-            placeholder="What's happening"
-            className="placeholder-gray-500 min-h-[50px] tracking-wide bg-transparent outline-none border-none text-[#d9d9d9] font-semibold w-full text-xl"
+            placeholder="What's happening? Tell us now"
+            className="placeholder-gray-500 min-h-[50px] tracking-wide bg-transparent outline-none border-none text-[#d9d9d9] font-medium w-full text-xl"
           ></textarea>
 
           {file && (
@@ -42,7 +57,42 @@ const Input = () => {
             </div>
           )}
         </div>
-        <div className="flex items-center justify-between pt-2.5"></div>
+        <div className="flex items-center justify-between pt-2.5">
+          <div className="flex items-center">
+            <div className="icon" onClick={() => imgInputRef.current.click()}>
+              <PhotographIcon color="#1b9df0" width={25} />
+              <input
+                type="file"
+                onChange={addImgToPost}
+                ref={imgInputRef}
+                hidden
+              />
+            </div>
+            <div className="icon ">
+              <ChartBarIcon color="#1b9df0" width={23} />
+            </div>
+            <div className="icon" onClick={() => setShowEmoji(!showEmoji)}>
+              <EmojiHappyIcon color="#1b9df0" width={23} />
+            </div>
+            <div className="icon">
+              <CalendarIcon color="#1b9df0" width={23} />
+            </div>
+            {showEmoji && (
+              <div ref={wrapperRef}>
+                <Picker
+                  theme="dark"
+                  style={{
+                    position: "absolute",
+                    borderRadius: "20px",
+                    maxWidth: "320px",
+                    marginTop: "18px",
+                    marginLeft: "-222px",
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
