@@ -12,7 +12,7 @@ import {
 } from "@heroicons/react/outline";
 import { HashtagIcon as ActiveHashtagIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import { useDetect } from "../util/useDetectHook";
+import { useDetect } from "../hooks/useDetectHook";
 
 const UserInfo = () => {
   return (
