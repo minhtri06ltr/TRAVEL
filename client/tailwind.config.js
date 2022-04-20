@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      formTitle: ["Dancing Script", "cursive"],
+    },
   },
   plugins: [],
 };

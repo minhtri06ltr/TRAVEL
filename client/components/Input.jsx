@@ -28,6 +28,7 @@ const Input = () => {
   const [showEmoji, setShowEmoji] = useState(false);
   useDetect(wrapperRef, setShowEmoji);
   const imgInputRef = useRef("");
+  console.log(file);
   const addImgToPost = (e) => {
     if (!e.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)) {
       alert("This file is not a image");
@@ -42,21 +43,19 @@ const Input = () => {
     };
   };
   const addEmoji = (e) => {
-    let sym = e.unified.split("-");
-    let codesArray = [];
-    sym.forEach((el) => codesArray.push("0x" + el));
-    let emoji = String.fromCodePoint(...codesArray);
-    setInput(input + emoji);
+    setInput(input + e.native);
   };
   const sendPost = async () => {
     if (loading) return;
     setLoading(true);
+    if (!file) {
+      await addDoc(collection(db, "posts"), {
+        text: input,
+        timestamp: serverTimestamp(),
+      });
+    }
 
-    const docRef = await addDoc(collection(db, "posts"), {
-      text: input,
-      timestamp: serverTimestamp(),
-    });
-    const imgRef = ref(storage, `posts/${docRef.id}/img`);
+    const imgRef = ref(storage, `posts/${docRef.id}/img`); // path store img in firebase storage
     if (file) {
       await uploadString(imgRef, file, "data_url").then(async () => {
         const downloadURL = await getDownloadURL(imgRef);
