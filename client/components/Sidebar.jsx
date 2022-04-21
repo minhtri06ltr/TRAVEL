@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import {
   HashtagIcon,
   BellIcon,
@@ -36,8 +36,16 @@ const UserInfo = () => {
 };
 const LogoutButton = () => {
   return (
-    <button className="shadow-2xl rounded-full py-1 w-full hover:bg-opacity-80 flex justify-center items-center bg-red-500">
-      <LogoutIcon color="white" width={35} height={35} />
+    <button className="shadow-2xl rounded-full p-0 sm:p-2 xl:p-0   w-full sm:w-auto xl:w-full hover:bg-opacity-80 flex justify-center items-center bg-red-500">
+      <LogoutIcon
+        color="white"
+        className="xl:hidden hidden  sm:block"
+        width={35}
+        height={35}
+      />
+      <span className="text-white py-2 text-xl sm:hidden font-medium  xl:block">
+        Log out
+      </span>
     </button>
   );
 };
@@ -127,7 +135,7 @@ const Sidebar = ({ setOpenSidebar, openSidebar }) => {
       </div>
     </div>
   ) : (
-    <div className="hidden sm:flex  h-screen fixed flex-col items-center w-20 xl:w-60  p-4">
+    <div className="hidden sm:flex  h-screen  fixed flex-col items-center w-20 xl:w-60  p-4">
       <div className="xl:ml-16  ">
         <Link href="/">
           <a className="hoverAnimation w-fit ">
@@ -167,9 +175,11 @@ const Sidebar = ({ setOpenSidebar, openSidebar }) => {
             Icon={item.active ? item.activeIcon : item.icon}
           />
         ))}
-        <div className="hidden xl:flex">
+
+        <div className="flex justify-center w-full">
           <LogoutButton />
         </div>
+
         <UserInfo />
       </div>
     </div>
