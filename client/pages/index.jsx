@@ -35,9 +35,11 @@ export async function getServerSideProps(context) {
   const followResults = await fetch("https://jsonkeeper.com/b/WWMJ").then(
     (res) => res.json()
   );
+  //get all sign in methods
   const providers = await getProviders();
   // const session = await getSession(context);
 
+  //export response data
   return {
     props: {
       trendingResults,

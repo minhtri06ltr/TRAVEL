@@ -28,7 +28,7 @@ const Input = () => {
   const [showEmoji, setShowEmoji] = useState(false);
   useDetect(wrapperRef, setShowEmoji);
   const imgInputRef = useRef("");
-  console.log(file);
+
   const addImgToPost = (e) => {
     if (!e.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)) {
       alert("This file is not a image");
