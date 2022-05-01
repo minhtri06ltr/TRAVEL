@@ -23,13 +23,13 @@ const Login = ({ providers }) => {
             {
               //convert object to array and map
               Object.values(providers).map((provider) => (
-                <a
+                <button
+                  onClick={() => signIn(provider.id, { callbackUrl: "/" })}
                   key={provider.name}
-                  href="#_"
                   className="box-border relative z-30 inline-flex items-center justify-center w-auto px-6 py-3 overflow-hidden font-bold text-white transition-all duration-300 bg-indigo-600 rounded-xl shadow-2xl cursor-pointer group ring-offset-2 ring-1 ring-indigo-300 ring-offset-indigo-200 hover:ring-offset-indigo-500 ease focus:outline-none"
                 >
-                  <span className="absolute bottom-0 right-0 w-8 h-20 -mb-8 -mr-5 transition-all duration-300 ease-out transform rotate-45 translate-x-1 bg-white opacity-10 group-hover:translate-x-0"></span>
-                  <span className="absolute top-0 left-0 w-20 h-8 -mt-1 -ml-12 transition-all duration-300 ease-out transform -rotate-45 -translate-x-1 bg-white opacity-10 group-hover:translate-x-0"></span>
+                  <span className="absolute bottom-0 right-0 w-8 h-20 -mb-8 -mr-5 transition-all duration-300 ease-out transform rotate-45 translate-x-1 bg-white opacity-20 group-hover:-translate-x-1"></span>
+                  <span className="absolute top-0 left-0 w-20 h-8 -mt-1 -ml-12 transition-all duration-300 ease-out transform -rotate-45 -translate-x-1 bg-white opacity-20 group-hover:translate-x-1"></span>
                   <span className="relative z-20 text-lg flex items-center font-semibold">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -73,9 +73,9 @@ const Login = ({ providers }) => {
                         d="M32,53c-11.58,0-21-9.421-21-21s9.42-21,21-21c3.924,0,7.75,1.089,11.067,3.149l-1.056,1.699 C39.012,13.985,35.55,13,32,13c-10.477,0-19,8.523-19,19s8.523,19,19,19c10.141,0,18.452-7.986,18.974-18H36v-2h17v1 C53,43.579,43.58,53,32,53z"
                       ></path>
                     </svg>
-                    Sign in with Google
+                    Sign in with {provider.name}
                   </span>
-                </a>
+                </button>
               ))
             }
           </div>

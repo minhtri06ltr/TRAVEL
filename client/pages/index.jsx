@@ -8,8 +8,9 @@ import Login from "../components/Login";
 
 export default function Home({ providers, trendingResults, followResults }) {
   const { data: session } = useSession();
-  if (!session) return <Login providers={providers} />;
   const [openSidebar, setOpenSidebar] = useState(false);
+  if (!session) return <Login providers={providers} />;
+
   return (
     <div className="bg-black">
       <Head>
