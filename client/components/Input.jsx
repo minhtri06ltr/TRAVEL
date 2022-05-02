@@ -18,8 +18,10 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useSession } from "next-auth/react";
 
 const Input = () => {
+  const { data: session } = useSession();
   const wrapperRef = useRef(null);
 
   const [input, setInput] = useState("");
@@ -48,12 +50,15 @@ const Input = () => {
   const sendPost = async () => {
     if (loading) return;
     setLoading(true);
-    if (!file) {
-      await addDoc(collection(db, "posts"), {
-        text: input,
-        timestamp: serverTimestamp(),
-      });
-    }
+
+    const docRef = await addDoc(collection(db, "posts"), {
+      id: session.user.uid,
+      username: session.user.name,
+      userImg: session.user.image,
+      tag: session.user.tag,
+      text: input,
+      timestamp: serverTimestamp(),
+    });
 
     const imgRef = ref(storage, `posts/${docRef.id}/img`); // path store img in firebase storage
     if (file) {
@@ -77,7 +82,7 @@ const Input = () => {
     >
       <img
         className=" rounded-full h-14 w-14 object-cover cursor-pointer"
-        src="https://scontent.fsgn6-1.fna.fbcdn.net/v/t1.15752-9/275373074_2770143603280900_442644796018170289_n.png?_nc_cat=109&ccb=1-5&_nc_sid=ae9488&_nc_ohc=90TAClBGCiAAX9hRZjy&_nc_ht=scontent.fsgn6-1.fna&oh=03_AVJck1KvvHpN9sdr71Y45IQoLJWKjox2-zx6s7YgKK8nnw&oe=627F079C"
+        src={session.user.image}
       />
       <div className=" flex-1 divide-y divide-gray-700">
         <div className={`${file && "pb-7"} ${input && "space-y-2.5"}`}>
@@ -159,7 +164,7 @@ const Input = () => {
             disabled={!input.trim() && !file}
             className={`text-white rounded-full bg-[#1d9bf0]
              w-28 font-bold shadow-2xl py-1.5 hover:bg-[#1a8cd8]
-             disabled:opacity-50 disabled:hover:bg-[#1d9bf0]
+             disabled:opacity-80 disabled:hover:bg-[#1d9bf0]
              flex items-center justify-center shrink-0
              ${loading && "cursor-default"}`}
             onClick={!loading ? sendPost : () => {}}
@@ -167,7 +172,7 @@ const Input = () => {
             {loading ? (
               <svg
                 role="status"
-                className=" w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                className=" w-6 h-6 text-white animate-spin dark:text-gray-600 fill-blue-600"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

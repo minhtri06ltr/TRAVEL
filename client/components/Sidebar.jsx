@@ -8,27 +8,27 @@ import {
   ClipboardListIcon,
   UserIcon,
   DotsCircleHorizontalIcon,
-  LogoutIcon,
 } from "@heroicons/react/outline";
-import { HashtagIcon as ActiveHashtagIcon } from "@heroicons/react/solid";
+import {
+  HashtagIcon as ActiveHashtagIcon,
+  LogoutIcon,
+} from "@heroicons/react/solid";
 import Link from "next/link";
 import { useDetect } from "../hooks/useDetectHook";
+import { signOut, useSession } from "next-auth/react";
 
-const UserInfo = () => {
+const UserInfo = ({ info }) => {
   return (
-    <div className="flex mt-16 xl:justify-start justify-center   hoverAnimation py-2 xl:py-2 xl:px-4 p-0 w-full cursor-pointer">
-      <div className="xl:mr-2.5 xl:-ml-2 mr-2.5 -ml-2 sm:mr-0 sm:ml-0   flex  justify-center ">
-        <img
-          src="https://scontent.fsgn6-1.fna.fbcdn.net/v/t1.15752-9/275373074_2770143603280900_442644796018170289_n.png?_nc_cat=109&ccb=1-5&_nc_sid=ae9488&_nc_ohc=90TAClBGCiAAX9hRZjy&_nc_ht=scontent.fsgn6-1.fna&oh=03_AVJck1KvvHpN9sdr71Y45IQoLJWKjox2-zx6s7YgKK8nnw&oe=627F079C"
-          className="h-14 w-14 rounded-full object-cover"
-        />
+    <div className="flex mt-16 xl:justify-start justify-start pl-4 sm:pl-0    xl:py-2   w-full">
+      <div className="xl:mr-2.5   mr-2.5  sm:mr-0  flex  justify-center ">
+        <img src={info.image} className="h-14 w-14 rounded-full object-cover" />
       </div>
-      <div className="xl:flex  flex-col  flex sm:hidden ">
-        <span className="text-white text-xl font-medium limit-text-line">
-          Lý Minh Trí
+      <div className="xl:flex  flex-col justify-between  flex sm:hidden ">
+        <span className="text-white text-xl font-semibold limit-text-line">
+          {info.name}
         </span>
         <span className="text-[#6e767d] text-base font-medium limit-text-line">
-          @lýminhtrí
+          @{info.tag}
         </span>
       </div>
     </div>
@@ -40,10 +40,13 @@ const LogoutButton = () => {
       <LogoutIcon
         color="white"
         className="xl:hidden hidden  sm:block"
-        width={35}
-        height={35}
+        width={32}
+        height={32}
       />
-      <span className="text-white py-2 text-xl sm:hidden font-medium  xl:block">
+      <span
+        onClick={signOut}
+        className="text-white py-2 text-xl sm:hidden font-medium  xl:block"
+      >
         Log out
       </span>
     </button>
@@ -65,7 +68,7 @@ const ItemForSmallDevice = ({ Icon, text, active }) => {
 };
 const ItemForLargeDevice = ({ Icon, text, active }) => {
   return (
-    <div className="my-6 hoverAnimation cursor-pointer flex w-full items-center">
+    <div className="my-6 p-4 hoverAnimation cursor-pointer flex w-full items-center">
       <Icon width={30} height={30} color="white" />
       <span
         className={`xl:block ml-4  hidden text-xl font-medium text-white ${
@@ -79,6 +82,7 @@ const ItemForLargeDevice = ({ Icon, text, active }) => {
 };
 
 const Sidebar = ({ setOpenSidebar, openSidebar }) => {
+  const { data: session } = useSession();
   const wrapperRef = useRef(null);
   useDetect(wrapperRef, setOpenSidebar);
   return openSidebar ? (
@@ -131,14 +135,14 @@ const Sidebar = ({ setOpenSidebar, openSidebar }) => {
         ))}
 
         <LogoutButton />
-        <UserInfo />
+        <UserInfo info={session.user} />
       </div>
     </div>
   ) : (
     <div className="hidden sm:flex  h-screen  fixed flex-col items-center w-20 xl:w-60  p-4">
       <div className="xl:ml-16  ">
         <Link href="/">
-          <a className="hoverAnimation w-fit ">
+          <a className="hoverAnimation w-fit p-4 ">
             <Image src="https://rb.gy/ogau5a" width={40} height={40} />
           </a>
         </Link>
@@ -176,11 +180,11 @@ const Sidebar = ({ setOpenSidebar, openSidebar }) => {
           />
         ))}
 
-        <div className="flex justify-center w-full">
+        <div onClick={signOut} className="flex justify-center w-full">
           <LogoutButton />
         </div>
 
-        <UserInfo />
+        <UserInfo info={session.user} />
       </div>
     </div>
   );

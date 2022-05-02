@@ -9,7 +9,12 @@ const Login = ({ providers }) => {
     <div className="flex justify-center items-center h-screen ">
       <div className=" bg-zinc-900 rounded-xl shadow-2xl md:w-[550px] min-h-[60%] w-[300px]  xl:w-[650px]  flex justify-center relative">
         <div className="rounded-full shadow-2xl border-8 flex items-center justify-center p-4  bg-[#1DA1F2] absolute border-black translate-y-[-60%]">
-          <Image src="https://rb.gy/ogau5a" width={70} height={70} />
+          <Image
+            src="https://rb.gy/ogau5a"
+            objectFit="contain"
+            width={70}
+            height={70}
+          />
         </div>
         <div className="flex flex-col w-full items-center">
           <div className="flex justify-around w-full items-center mt-12">

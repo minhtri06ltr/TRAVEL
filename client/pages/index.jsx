@@ -10,7 +10,6 @@ export default function Home({ providers, trendingResults, followResults }) {
   const { data: session } = useSession();
   const [openSidebar, setOpenSidebar] = useState(false);
   if (!session) return <Login providers={providers} />;
-
   return (
     <div className="bg-black">
       <Head>
@@ -22,7 +21,7 @@ export default function Home({ providers, trendingResults, followResults }) {
         <Sidebar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
         <Feed setOpenSidebar={setOpenSidebar} />
         <Widget />
-
+        {session.user.name}
         {/*Modal */}
       </main>
     </div>
@@ -38,7 +37,8 @@ export async function getServerSideProps(context) {
   );
   //get all sign in methods
   const providers = await getProviders();
-  // const session = await getSession(context);
+  //get user session on server before render
+  const session = await getSession(context);
 
   //export response data
   return {
@@ -46,7 +46,7 @@ export async function getServerSideProps(context) {
       trendingResults,
       followResults,
       providers,
-      // session,
+      session,
     },
   };
 }
